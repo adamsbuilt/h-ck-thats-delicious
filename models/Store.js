@@ -88,6 +88,7 @@ storeSchema.statics.getTopStores = function () {
       photo: '$$ROOT.photo',
       name: '$$ROOT.name',
       reviews: '$$ROOT.reviews',
+      slug: '$$ROOT.slug',
       averageRating: {$avg: '$reviews.rating'}
     }},
     // Sort by our new field, heighest reviews First
@@ -103,5 +104,13 @@ storeSchema.virtual('reviews', {
   localField: '_id', // which field on the store?
   foreignField: 'store' // which field on the review?
 });
+
+function autopopulate(next) {
+  this.populate('reviews');
+  next();
+}
+
+storeSchema.pre('find', autopopulate);
+storeSchema.pre('findOne', autopopulate);
 
 module.exports = mongoose.model('Store', storeSchema)
