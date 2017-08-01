@@ -4,3 +4,5 @@ public/uploads
 controllers/.gitkeep
 models/.gitkeep
 views/mixins/.gitkeep
+.DS_Store
+variables.env.now
